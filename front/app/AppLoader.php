@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace front\app;
 
 class AppLoader{
     static function register(){

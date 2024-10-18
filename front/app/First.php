@@ -1,5 +1,5 @@
 <?php 
-namespace App;
+namespace front\app;
 
 class First{
     public function test(){

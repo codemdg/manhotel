@@ -1,17 +1,22 @@
 <?php
 
 
-use App\First;
-use App\Quarter;
+namespace front\public;
 
-class AutoLoader{
-    static function register(){
+use front\app\First;
+use front\app\Quarter;
+
+class AutoLoader
+{
+    static function register()
+    {
         spl_autoload_register([__CLASS__, 'autoload']);
     }
 
-    static function autoload($class){
-       $class = lcfirst(str_replace("\\","/", $class));
-        require_once dirname(__DIR__)."/$class.php";
+    static function autoload($class)
+    {
+        $class = lcfirst(str_replace("\\", "/", $class));
+        require_once dirname(__DIR__) . "/$class.php";
     }
 }
 
