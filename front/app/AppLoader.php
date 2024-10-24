@@ -1,13 +1,26 @@
 <?php
-namespace front\app;
 
-class AppLoader{
-    static function register(){
+namespace App;
+
+class AutoLoader
+{
+    /**
+     *
+     * @return void
+     */
+    static function register(): void
+    {
         spl_autoload_register([__CLASS__, 'autoload']);
     }
 
-    static function autoload($class){
-        $class = str_replace(__NAMESPACE__."\\","", $class);
-        require_once __DIR__."/$class.php";
+    /**
+     * @param $class
+     * @return void
+     */
+    static function autoload($class): void
+    {
+        $class = lcfirst(str_replace("\\", "/", $class));
+        require_once dirname(__DIR__) . "/$class.php";
     }
 }
+
