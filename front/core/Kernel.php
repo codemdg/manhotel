@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Core;
 
 use Core\Attributes\Controller;
+use Core\Responses\HtmlResponse;
 use ReflectionClass;
 
 class Kernel
@@ -26,7 +27,7 @@ class Kernel
 					foreach ($method->getAttributes() as $attribute) {
 						$args = $attribute->getArguments();
 						if ($args['url'] === $_SERVER['REQUEST_URI']) {
-							$instance = $reflectionClass->newInstance();
+							$instance = $reflectionClass->newInstance(new HtmlResponse());
 							$method->invoke($instance);
 							break 3;
 						}
