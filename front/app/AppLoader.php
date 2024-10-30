@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
-class AutoLoader
+define('ROOT_APP', dirname(__FILE__));
+
+class AppLoader
 {
     /**
      *
@@ -19,8 +23,11 @@ class AutoLoader
      */
     static function autoload($class): void
     {
-        $class = lcfirst(str_replace("\\", "/", $class));
-        require_once dirname(__DIR__) . "/$class.php";
+        if (str_starts_with($class, __NAMESPACE__)) {
+            $class = substr($class, strlen(__NAMESPACE__) + 1);
+            $class = str_replace('\\', '/', $class);
+
+            require_once ROOT_APP . "/" . $class . ".php";
+        }
     }
 }
-
