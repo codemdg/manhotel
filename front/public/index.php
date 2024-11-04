@@ -2,6 +2,7 @@
 
 use App\Controllers\SecurityController;
 use Core\Kernel;
+use Core\Responses\HtmlResponse;
 
 define('ROOT', dirname(__DIR__));
 

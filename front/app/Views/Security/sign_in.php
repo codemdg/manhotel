@@ -1,3 +1,15 @@
+<?php
+
+use Core\Responses\BlockBuilder;
+
+include ROOT_APP . "/Views/default.php";
+
+$block = new BlockBuilder();
+$block->startBlock('additionnal_styles');
+?>
+<link href="<?= BASE_URL ?>/css/sign_in.css" rel="stylesheet" type="text/css">
+<?php $block->endBlock(); ?>
+
 <form method="post">
 	<img class="mb-4" src="images/logo.png" alt="" width="72" height="57">
 	<h1 class="h3 mb-3 fw-normal">Please sign in</h1>

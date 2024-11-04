@@ -8,11 +8,11 @@ use Core\Attributes\Controller;
 use Core\Attributes\Route;
 
 #[Controller]
-class RoomController
+class RoomController extends AbstractController
 {
-    #[Route(url: "/list/rooms", name: "list_rooms")]
+    #[Route(url: "/add/room/V1", name: "add_room")]
     public function listRoom(): void
     {
-        echo "<p> list rooms </p>";
+        $this->responseInterface->render("Room/add_room.php");
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Core;
 
+define('BASE_URL', $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST']);
+
 use Core\Attributes\Controller;
 use Core\Responses\HtmlResponse;
 use ReflectionClass;
