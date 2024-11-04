@@ -1,15 +1,21 @@
 <?php
 
-use Core\Responses\BlockBuilder;
+use Core\Views\BlockBuilder;
 
-include ROOT_APP . "/Views/default.php";
+BlockBuilder::startBlock("body_classes");
+echo "text-center";
+BlockBuilder::endBlock();
 
-$block = new BlockBuilder();
-$block->startBlock('additionnal_styles');
+BlockBuilder::startBlock("main_classes");
+echo "form-signin w-100 m-auto";
+BlockBuilder::endBlock();
+
+BlockBuilder::startBlock('additionnal_styles');
 ?>
 <link href="<?= BASE_URL ?>/css/sign_in.css" rel="stylesheet" type="text/css">
-<?php $block->endBlock(); ?>
+<?php BlockBuilder::endBlock(); ?>
 
+<?php BlockBuilder::startBlock("content"); ?>
 <form method="post">
 	<img class="mb-4" src="images/logo.png" alt="" width="72" height="57">
 	<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -29,7 +35,6 @@ $block->startBlock('additionnal_styles');
 		</label>
 	</div>
 	<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-	<a href="/" class="my-2 w-100 btn btn-lg btn-warning text-white" type="submit">
-		<< Retour</a>
-			<p class="mt-5 mb-3 text-muted">&copy; 2025–2026</p>
+	<p class="mt-5 mb-3 text-muted">&copy; 2025–2026</p>
 </form>
+<?php BlockBuilder::endBlock(); ?>

@@ -11,11 +11,11 @@ class HtmlResponse implements ResponseInterface
 		if (!empty($args)) {
 			extract($args);
 		}
-		/*ob_start();*/
+		ob_start();
 		require ROOT_APP . "/Views/" . $view;
-		/*$content = ob_get_clean();*/
+		$content = ob_get_clean();
 
 		//add this content to the main template
-		/*require ROOT_APP . "/Views/default.php";*/
+		require ROOT_APP . "/Views/default.php";
 	}
 }
