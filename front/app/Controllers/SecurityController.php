@@ -14,8 +14,7 @@ class SecurityController extends AbstractController
     public function showLogin(): void
     {
         $this->responseInterface->render("Security/sign_in.php", [
-            "bodyClasses" => "text-center",
-            "mainClasses" => "form-signin w-100 m-auto"
+            "test" => "variable",
         ]);
     }
 }
