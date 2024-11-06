@@ -1,5 +1,6 @@
 <?php
 
+use Core\Utils\FlashBag;
 use Core\Views\BlockBuilder;
 
 BlockBuilder::startBlock("body_classes");
@@ -16,10 +17,16 @@ BlockBuilder::startBlock('additionnal_styles');
 <?php BlockBuilder::endBlock(); ?>
 
 <?php BlockBuilder::startBlock("content"); ?>
-<form method="post">
+<form method="post" action="/login">
 	<img class="mb-4" src="images/logo.png" alt="" width="72" height="57">
 	<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+	<?php
+	if (FlashBag::isThereMessageBag()) {
+		foreach (FlashBag::getMessages() as $message) {
+			echo "<div class='text-danger'>" . $message . "</div>";
+		}
+	}
+	?>
 	<div class="form-floating">
 		<input type="text" class="form-control" id="floatingInput" value="demo" name="username" placeholder="Tape your username">
 		<label for="floatingInput">Username</label>

@@ -21,7 +21,7 @@ $content = isset($content) ? $content : "";
 
     <link href="<?= BASE_URL ?>/css/app.css" rel="stylesheet" type="text/css">
 
-    <?php BlockBuilder::renderBlock("additionnal_styles", "test") ?>
+    <?php BlockBuilder::renderBlock("additionnal_styles", "") ?>
 </head>
 
 <body class="<?= BlockBuilder::renderBlock("body_classes", ""); ?>">

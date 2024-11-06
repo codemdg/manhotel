@@ -18,8 +18,9 @@ class Kernel
 	}
 
 
-	public function handleRequest(): void
+	public function handleRequest(): bool
 	{
+		$routeExists = false;
 		$classes = get_declared_classes();
 		foreach ($classes as $class) {
 			$reflectionClass = new ReflectionClass($class);
@@ -31,12 +32,15 @@ class Kernel
 						if ($args['url'] === $_SERVER['REQUEST_URI']) {
 							$instance = $reflectionClass->newInstance(new HtmlResponse());
 							$method->invoke($instance);
+							$routeExists = true;
 							break 3;
 						}
 					}
 				}
 			}
 		}
+
+		return $routeExists;
 	}
 
 	private function loadControllers(): void
