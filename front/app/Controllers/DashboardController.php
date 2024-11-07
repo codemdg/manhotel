@@ -10,7 +10,7 @@ use Core\Attributes\Route;
 #[Controller]
 class DashboardController extends AbstractController
 {
-    #[Route(url: "/admin/dashboard", name: "admin_dashboard")]
+    #[Route(url: "/admin/dashboard", name: "admin_dashboard", isProtected: true)]
     public function home(): void
     {
         $this->responseInterface->render(view: "dashboard.php");

@@ -32,7 +32,7 @@ BlockBuilder::startBlock('additionnal_styles');
 		<label for="floatingInput">Username</label>
 	</div>
 	<div class="form-floating">
-		<input type="password" name="password" class="form-control" id="floatingPassword" value="demo" placeholder="Password">
+		<input type="password" name="password" class="form-control" id="floatingPassword" value="admin123" placeholder="Password">
 		<label for="floatingPassword">Password</label>
 	</div>
 

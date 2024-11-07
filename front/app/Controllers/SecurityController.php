@@ -24,11 +24,21 @@ class SecurityController extends AbstractController
                 ->authenticate(new LoginRequest($_POST["username"], $_POST["password"]));
             if ($accountLoginDto->isAuthenticated()) {
                 Session::setSession(key: "auth", value: true);
-                Session::setSession(key: "user", value: ["username" => $accountLoginDto->getUsername()]);
+                Session::setSession(key: "user", value: [
+                    "username" => $accountLoginDto->getUsername()
+                ]);
                 header("Location: " . BASE_URL . "/admin/dashboard");
             }
         }
 
         $this->responseInterface->render("Security/sign_in.php");
+    }
+
+    #[Route(url: "/logout", name: "logout")]
+    public function logout(): void
+    {
+        Session::destroy();
+
+        header("Location: " . BASE_URL . "/admin/dashboard");
     }
 }
