@@ -31,7 +31,7 @@ class Kernel
 				foreach ($reflectionClass->getMethods() as $method) {
 					foreach ($method->getAttributes() as $attribute) {
 						$args = $attribute->getArguments();
-						if ($args['url'] === $_SERVER['REQUEST_URI']) {
+						if ($args['url'] === $this->uri) {
 							$instance = $reflectionClass->newInstance(new HtmlResponse());
 							if (isset($args['isProtected']) && $args["isProtected"]) {
 								try {

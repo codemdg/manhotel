@@ -1,5 +1,6 @@
 <?php
 
+use Core\Utils\Session;
 use Core\Views\BlockBuilder;
 
 $bodyClasses = isset($bodyClasses) ? $bodyClasses : "";
@@ -58,7 +59,7 @@ $content = isset($content) ? $content : "";
                             <i class="fa-regular fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                            <li><a class="dropdown-item " href="<?= BASE_URL . "/admin/profile"; ?>">Profile</a></li>
+                            <li><a class="dropdown-item " href="<?= BASE_URL . "/admin/profile?id=" . Session::getSession("id"); ?>">Profile</a></li>
                             <li><a class="dropdown-item" href="#">Parameters</a></li>
                             <li>
                                 <hr class="dropdown-divider">

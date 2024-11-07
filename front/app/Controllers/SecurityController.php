@@ -24,9 +24,8 @@ class SecurityController extends AbstractController
                 ->authenticate(new LoginRequest($_POST["username"], $_POST["password"]));
             if ($accountLoginDto->isAuthenticated()) {
                 Session::setSession(key: "auth", value: true);
-                Session::setSession(key: "user", value: [
-                    "username" => $accountLoginDto->getUsername()
-                ]);
+                Session::setSession(key: "id", value: $accountLoginDto->getId());
+                Session::setSession(key: "username", value: $accountLoginDto->getUsername());
                 header("Location: " . BASE_URL . "/admin/dashboard");
             }
         }
