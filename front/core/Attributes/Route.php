@@ -9,7 +9,7 @@ use Attribute;
 #[Attribute]
 class Route
 {
-	public function __construct(private string $url, private string $name) {}
+	public function __construct(private string $url, private string $name, private bool $isProtected = false) {}
 
 	public function getName(): string
 	{
@@ -19,5 +19,10 @@ class Route
 	public function getUrl(): string
 	{
 		return $this->url;
+	}
+
+	public function isProtected(): bool
+	{
+		return $this->isProtected;
 	}
 }

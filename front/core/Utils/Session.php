@@ -18,6 +18,11 @@ class Session
 
 	public static function getSession(string $key): mixed
 	{
-		return $_SESSION[$key];
+		return $_SESSION[$key] ?? null;
+	}
+
+	public static function destroy(): void
+	{
+		session_destroy();
 	}
 }
