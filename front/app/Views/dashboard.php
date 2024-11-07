@@ -1,6 +1,8 @@
 <?php
 
 use Core\Views\BlockBuilder;
+
+$defaultView = "defaultAdmin.php";
 ?>
 
 
