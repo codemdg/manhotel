@@ -13,7 +13,6 @@ class SearchProduct
     {
         $mysqlConnector = new MysqlConnector();
         $pdo = $mysqlConnector->connect();
-
         $statement = $pdo->prepare("SELECT * FROM mkt_product WHERE name LIKE :product_name");
         $statement->execute([':product_name' => "%" . $productName . "%"]);
 

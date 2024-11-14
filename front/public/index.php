@@ -35,6 +35,7 @@
                             <th scope="col">Product</th>
                             <th scope="col">Unit price</th>
                             <th scope="col">QT</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +45,14 @@
             </div>
             <div class="col-6">
                 <h2>CLIENT</h2>
-                <button type="button" class="btn btn-outline-secondary">Nouveau client</button>
+                <div class="row">
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-outline-secondary" id="btn-new-bill">Nouveau client</button>
+                    </div>
+                    <div class="col-sm">
+                        <h4>N°: <span id="code-bill">00000</span></h4>
+                    </div>
+                </div>
 
                 <table class="table">
                     <thead>
