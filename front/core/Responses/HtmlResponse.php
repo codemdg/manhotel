@@ -17,4 +17,12 @@ class HtmlResponse implements ResponseInterface
 		//add this content to the main template
 		require ROOT_APP . "/Views/$defaultView";
 	}
+
+	public function renderView(string $view, array $args = []): void
+	{
+		if (!empty($args)) {
+			extract($args);
+		}
+		require ROOT_APP . "/Views/" . $view;
+	}
 }

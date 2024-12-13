@@ -73,11 +73,13 @@ $content = isset($content) ? $content : "";
     </nav>
 
     <main class="<?= BlockBuilder::renderBlock("main_classes", ""); ?>">
+        <?php include "shared/confirmation_modal.php"; ?>
+        <?php include "shared/detail_modal.php"; ?>
         <?= BlockBuilder::renderBlock("content", ""); ?>
     </main>
     <script src="<?= BASE_URL ?>/vendor/bootstrap/js/jquery-3.7.1.min.js"></script>
     <script src="<?= BASE_URL ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="<?= BASE_URL ?>/js/main.js"></script>
 
     <?php BlockBuilder::renderBlock("additionnal_scripts", "") ?>
 </body>

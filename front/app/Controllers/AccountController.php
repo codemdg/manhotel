@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\DataTransferObjects\AccountDto;
 use App\Models\AccountModel;
 use Core\Attributes\Controller;
 use Core\Attributes\Route;
+use Core\Utils\FlashBag;
 
 #[Controller]
 class AccountController extends AbstractController
@@ -25,8 +27,51 @@ class AccountController extends AbstractController
         if (!empty($_POST)) {
             $accountModel = new AccountModel();
             $accountModel->addNewAccount($_POST);
+            FlashBag::create(message: "Account added successfully!");
+            header("Location: " . BASE_URL . "/admin/list-accounts");
         }
 
         $this->responseInterface->render("Accounts/add_account.php");
+    }
+
+    #[Route(url: "/admin/edit-account", name: "edit_account")]
+    public function editAccount(): void
+    {
+        $accountModel = new AccountModel();
+        $accountDto = $accountModel->findAccountById(intval($_GET['id']));
+
+        if (!empty($_POST)) {
+            $accountModel->saveAccount($_POST, intval($_GET['id']));
+            FlashBag::create(message: "Account saved successfully!");
+            header("Location: " . BASE_URL . "/admin/list-accounts");
+        }
+
+        $this->responseInterface->render("Accounts/edit_account.php", [
+            'accountDto' => $accountDto
+        ]);
+    }
+
+    #[Route(url: "/admin/delete-account", name: "delete_account")]
+    public function deleteAccount(): void
+    {
+        $accountModel = new AccountModel();
+        if (!empty($_GET) && isset($_GET["id"])) {
+            $accountModel->deleteAccount(intval($_GET['id']));
+            FlashBag::create(message: "Account id:" . $_GET['id'] . " deleted successfully!");
+        }
+
+        header("Location: " . BASE_URL . "/admin/list-accounts");
+    }
+
+    #[Route(url: "/admin/detail-account", name: "detail_account")]
+    public function detailAccount(): void
+    {
+        $accountDto = new AccountDto();
+        if (!empty($_GET) && isset($_GET['id'])) {
+            $accountModel = new AccountModel();
+            $accountDto = $accountModel->findAccountById(intval($_GET['id']));
+        }
+
+        $this->responseInterface->renderView("Accounts/detail_account.php", ['accountDto' => $accountDto]);
     }
 }

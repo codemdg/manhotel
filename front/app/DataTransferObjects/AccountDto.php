@@ -11,4 +11,5 @@ class AccountDto
     public string $username;
     public string $email;
     public string $created_at;
+    public string $password;
 }

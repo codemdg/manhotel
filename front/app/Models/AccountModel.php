@@ -48,6 +48,20 @@ class AccountModel extends AbstractModel
         return new AccountLoginDto(id: $result->id, username: $result->username, password: $result->password);
     }
 
+    public function findAccountById(int $id): AccountDto
+    {
+        $pdoStatement = $this->pdo->prepare(
+            "SELECT username, email, id, created_at FROM " . self::TABLE_ACCOUNT_NAME .
+                " WHERE id = :id"
+        );
+        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, AccountDto::class);
+        $pdoStatement->execute([
+            'id' => $id
+        ]);
+
+        return $pdoStatement->fetch();
+    }
+
     public function findAll(): array|bool
     {
         $pdoStatement = $this->pdo->prepare(
@@ -65,19 +79,51 @@ class AccountModel extends AbstractModel
     {
         $today = new DateTime();
         $pdoStatement = $this->pdo->prepare(
-            "INSERT INTO manhotel.mh_account
-            (id, username, password, email, created_at)
+            "INSERT INTO " . self::TABLE_ACCOUNT_NAME .
+                "(id, username, password, email, created_at)
             VALUES(null, :username, :password, :email, :created_at);"
         );
         try {
             $pdoStatement->execute([
                 "username" => $account['txt_username'],
-                "password" => $account['txt_password'],
+                "password" => sha1($account['txt_password']),
                 "email" => $account['txt_email'],
                 "created_at" => $today->format('Y-m-d h:i:s'),
             ]);
         } catch (PDOException $e) {
             throw new Exception("Error when adding new account " . $e->getMessage());
+        }
+    }
+
+    public function saveAccount(array $account, int $id): void
+    {
+        $pdoStatement = $this->pdo->prepare(
+            " UPDATE " . self::TABLE_ACCOUNT_NAME .
+                "  SET username = :username, email= :email WHERE id=:id "
+        );
+        try {
+            $pdoStatement->execute([
+                "username" => $account['txt_username'],
+                "email" => $account['txt_email'],
+                "id" => $id
+            ]);
+        } catch (PDOException $e) {
+            throw new Exception("Error when updating account " . $e->getMessage());
+        }
+    }
+
+    public function deleteAccount(int $accountId): void
+    {
+        $pdoStatement = $this->pdo->prepare(
+            "DELETE FROM " . self::TABLE_ACCOUNT_NAME .
+                " WHERE id = :accountId"
+        );
+        try {
+            $pdoStatement->execute([
+                "accountId" => $accountId
+            ]);
+        } catch (PDOException $e) {
+            throw new Exception("Error when deleting account " . $e->getMessage());
         }
     }
 }
