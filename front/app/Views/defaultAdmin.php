@@ -43,7 +43,7 @@ $content = isset($content) ? $content : "";
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= BASE_URL . "/admin/list-accounts" ?>">
+                        <a class="nav-link" href="<?= BASE_URL . "/admin/list-accounts?page=1" ?>">
                             <i class="fa-solid fa-user-shield"></i> Accounts
                         </a>
                     </li>

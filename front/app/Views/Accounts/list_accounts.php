@@ -1,11 +1,13 @@
 <?php
 
+use App\DataTransferObjects\PaginatorDto;
 use App\Utils\MhFlashBag;
 use Core\Utils\UrlGenerator;
 use Core\Views\BlockBuilder;
 
 $defaultView = "defaultAdmin.php";
 $accounts = $accounts ?? [];
+$paginatorDto = $paginatorDto ?? new PaginatorDto();
 ?>
 
 <?php BlockBuilder::startBlock("content") ?>
@@ -66,6 +68,35 @@ $accounts = $accounts ?? [];
                 <?php
                 } ?>
             </tbody>
+
+            <tfoot>
+                <tr>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item <?= ($paginatorDto->page - 1) > 0 ? "" : "disabled" ?>">
+                                <a class="page-link" href="<?= UrlGenerator::generate("/admin/list-accounts?page=" . $paginatorDto->page - 1) ?>"
+                                    tabindex="-1">Previous</a>
+                            </li>
+                            <?php
+                            for ($i = 1; $i <= $paginatorDto->total_page; $i++) {
+                                $pageActive = $i === $paginatorDto->page ? 'active' : '';
+                            ?>
+                                <?= "<li class=\"page-item $pageActive\">" .
+                                    " <a class=\"page-link\" href=\"" . UrlGenerator::generate("/admin/list-accounts?page=" . $i) . "\">" .
+                                    $i .
+                                    " </a>" .
+                                    "</li>"
+                                ?>
+                            <?php
+                            }
+                            ?>
+                            <li class="page-item <?= ((int)$paginatorDto->page + 1) <= $paginatorDto->total_page ? "" : "disabled" ?>">
+                                <a class="page-link" href="<?= UrlGenerator::generate("/admin/list-accounts?page=" . $paginatorDto->page + 1) ?>">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

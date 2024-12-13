@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\DataTransferObjects\AccountDto;
 use App\DataTransferObjects\AccountLoginDto;
+use App\DataTransferObjects\PaginatorDto;
 use DateTime;
 use Exception;
 use PDO;
@@ -14,6 +15,7 @@ use PDOException;
 class AccountModel extends AbstractModel
 {
     const TABLE_ACCOUNT_NAME = "mh_account";
+    const LIMIT_ROW = 10;
 
     public function isAccountExists(string $username): bool
     {
@@ -62,17 +64,25 @@ class AccountModel extends AbstractModel
         return $pdoStatement->fetch();
     }
 
-    public function findAll(): array|bool
+    public function findAll(PaginatorDto $paginatorDto): array|bool
     {
         $pdoStatement = $this->pdo->prepare(
             "SELECT id, username, email, created_at FROM " . self::TABLE_ACCOUNT_NAME .
-                " ORDER BY username ASC"
+                " ORDER BY username ASC " .
+                " LIMIT :limit_page OFFSET :offset_page "
         );
-        $pdoStatement->execute();
-        $pdoStatement->setFetchMode(PDO::FETCH_CLASS, AccountDto::class);
-        $result = $pdoStatement->fetchAll();
 
-        return $result;
+        try {
+            $pdoStatement->bindValue("limit_page", $paginatorDto->limit, PDO::PARAM_INT);
+            $pdoStatement->bindValue("offset_page", $paginatorDto->offset, PDO::PARAM_INT);
+            $pdoStatement->execute();
+            $pdoStatement->setFetchMode(PDO::FETCH_CLASS, AccountDto::class);
+            $result = $pdoStatement->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            throw new Exception("Error occurs when fetching accounts " . $e->getMessage());
+        }
     }
 
     public function addNewAccount(array $account): void

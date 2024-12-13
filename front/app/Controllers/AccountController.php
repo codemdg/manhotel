@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\DataTransferObjects\AccountDto;
 use App\Models\AccountModel;
+use App\Models\PaginatorModel;
 use Core\Attributes\Controller;
 use Core\Attributes\Route;
 use Core\Utils\FlashBag;
@@ -17,8 +18,12 @@ class AccountController extends AbstractController
     public function listAccounts(): void
     {
         $accountModel = new AccountModel();
+        $paginatorModel = new PaginatorModel();
+        $page = $_GET['page'] ?? 1;
+        $paginatorDto = $paginatorModel->createPaginator(AccountModel::TABLE_ACCOUNT_NAME, AccountModel::LIMIT_ROW, intval($page));
+        $accounts = $accountModel->findAll($paginatorDto);
 
-        $this->responseInterface->render("Accounts/list_accounts.php", ['accounts' => $accountModel->findAll()]);
+        $this->responseInterface->render("Accounts/list_accounts.php", ['accounts' => $accounts, 'paginatorDto' => $paginatorDto]);
     }
 
     #[Route(url: "/admin/add-account", name: "add_account")]
