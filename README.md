@@ -1,2 +1,2 @@
 # manhotel
-hotel management
+hotel management admin
